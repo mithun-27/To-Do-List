@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #e0e7ff 0%, #f7f7fa 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .todo-container {
+  background: rgba(255,255,255,0.97);
+  margin-top: 60px;
+  padding: 36px 18px 28px 18px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(44,62,80,0.13);
+  width: 100%;
+  max-width: 440px;
+  box-sizing: border-box;
+  backdrop-filter: blur(2px);
+    }
+    h2 {
+      text-align: center;
+      color: #4a4a6a;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+    }
+    .input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 26px;
+  align-items: stretch;
+  width: 100%;
+    }
+    .input-section input[type="text"],
+    .input-section input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 16px;
+  border: 1.5px solid #e0e0f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  background: #f7f7fa;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 2px rgba(44,62,80,0.04);
+  margin-bottom: 2px;
+    }
+    .date-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  width: 100%;
+    }
+    .date-field {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .date-field label {
+      font-size: 0.97em;
+      color: #6c63ff;
+      margin-bottom: 2px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+    .date-field input[type="date"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 10px;
+  border: 1.5px solid #e0e0f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  background: #f7f7fa;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 2px rgba(44,62,80,0.04);
+    }
+    .date-field input[type="date"]:focus {
+      border: 1.5px solid #6c63ff;
+      background: #f0f0ff;
+    }
+    .input-section input[type="text"]:focus,
+    .input-section input[type="date"]:focus {
+      border: 1.5px solid #6c63ff;
+      background: #f0f0ff;
+    }
+    .input-section button {
+      background: linear-gradient(90deg, #6c63ff 60%, #48c6ef 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(76,110,245,0.08);
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .input-section button:hover {
+      background: linear-gradient(90deg, #5548c8 60%, #48c6ef 100%);
+      box-shadow: 0 4px 16px rgba(76,110,245,0.13);
+    }
+    ul.todo-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    ul.todo-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(90deg, #f2f2fa 60%, #e0e7ff 100%);
+      margin-bottom: 14px;
+      padding: 14px 16px 12px 16px;
+      border-radius: 10px;
+      font-size: 1rem;
+      box-shadow: 0 2px 8px rgba(44,62,80,0.06);
+      transition: background 0.2s, box-shadow 0.2s;
+      min-height: 56px;
+    }
+    ul.todo-list li.completed {
+      text-decoration: line-through;
+      color: #b0b0c3;
+      background: linear-gradient(90deg, #e6e6f7 60%, #e0e7ff 100%);
+      opacity: 0.7;
+    }
+    .todo-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .todo-actions button {
+      background: none;
+      border: none;
+      color: #6c63ff;
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .todo-actions button:hover {
+      background: #e0e0ff;
+      color: #5548c8;
+    }
+    @media (max-width: 600px) {
+      .todo-container {
+        padding: 14px 2vw 10px 2vw;
+        max-width: 99vw;
+      }
+      .input-section {
+        flex-direction: column;
+        gap: 8px;
+      }
+      .input-section input,
+      .input-section button {
+        width: 100%;
+        min-width: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="todo-container">
+    <h2>To-Do List</h2>
+    <div class="input-section">
+      <input type="text" id="todo-input" placeholder="Add a new task...">
+      <div class="date-grid">
+        <div class="date-field">
+          <label for="start-date">Start date</label>
+          <input type="date" id="start-date" title="Start date" aria-label="Start date">
+        </div>
+        <div class="date-field">
+          <label for="end-date">End date</label>
+          <input type="date" id="end-date" title="End date" aria-label="End date">
+        </div>
+      </div>
+      <button onclick="addTodo()">Add</button>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px;flex-wrap:wrap;">
+      <div id="task-counter" style="font-size:1.02em;color:#6c63ff;font-weight:500;"></div>
+      <div style="display:flex;gap:6px;">
+        <button class="filter-btn" onclick="setFilter('all')" id="filter-all">All</button>
+        <button class="filter-btn" onclick="setFilter('active')" id="filter-active">Active</button>
+        <button class="filter-btn" onclick="setFilter('completed')" id="filter-completed">Completed</button>
+      </div>
+    </div>
+    <ul class="todo-list" id="todo-list"></ul>
+
+  </div>
+  <script>
+  let todos = [];
+  let filter = 'all';
+
+    function renderTodos() {
+      const list = document.getElementById('todo-list');
+      list.innerHTML = '';
+      let filtered = todos;
+      if (filter === 'active') filtered = todos.filter(t => !t.completed);
+      if (filter === 'completed') filtered = todos.filter(t => t.completed);
+      filtered.forEach((todo, idx) => {
+        // Find the real index in todos for actions
+        const realIdx = todos.indexOf(todo);
+        const li = document.createElement('li');
+        li.className = todo.completed ? 'completed' : '';
+        const countdown = getCountdown(todo.endDate);
+        li.innerHTML = `
+          <div style="flex:1;display:flex;flex-direction:column;cursor:pointer;" onclick="toggleComplete(${realIdx})">
+            <span>${todo.text}</span>
+            <small style="color:#888;font-size:0.92em;">Start: ${todo.startDate ? todo.startDate : 'N/A'} | End: ${todo.endDate ? todo.endDate : 'N/A'}</small>
+            <small style="color:#e57373;font-size:0.92em;">${countdown}</small>
+          </div>
+          <div class="todo-actions">
+            <button title="Edit" onclick="editTodo(${realIdx});event.stopPropagation();">✏️</button>
+            <button title="Delete" onclick="deleteTodo(${realIdx});event.stopPropagation();">🗑️</button>
+          </div>
+        `;
+        list.appendChild(li);
+      });
+      updateCounter();
+      updateFilterButtons();
+      saveTodos();
+    }
+function updateCounter() {
+  const total = todos.length;
+  const active = todos.filter(t => !t.completed).length;
+  const completed = todos.filter(t => t.completed).length;
+  document.getElementById('task-counter').textContent = `Total: ${total} | Active: ${active} | Completed: ${completed}`;
+}
+
+function setFilter(f) {
+  filter = f;
+  renderTodos();
+}
+
+function updateFilterButtons() {
+  ['all','active','completed'].forEach(f => {
+    const btn = document.getElementById('filter-' + f);
+    if (btn) btn.classList.toggle('active', filter === f);
+  });
+}
+
+function saveTodos() {
+  localStorage.setItem('todos-modern', JSON.stringify(todos));
+}
+
+function loadTodos() {
+  const data = localStorage.getItem('todos-modern');
+  if (data) {
+    todos = JSON.parse(data);
+  }
+}
+
+    function addTodo() {
+      const input = document.getElementById('todo-input');
+      const startInput = document.getElementById('start-date');
+      const endInput = document.getElementById('end-date');
+      const text = input.value.trim();
+      const startDate = startInput.value;
+      const endDate = endInput.value;
+      if (text) {
+        todos.push({ text, startDate, endDate, completed: false });
+        input.value = '';
+        startInput.value = '';
+        endInput.value = '';
+        renderTodos();
+      }
+    }
+
+    function deleteTodo(idx) {
+      todos.splice(idx, 1);
+      renderTodos();
+    }
+
+    function toggleComplete(idx) {
+      todos[idx].completed = !todos[idx].completed;
+      renderTodos();
+    }
+
+    function editTodo(idx) {
+      const newText = prompt('Edit your task:', todos[idx].text);
+      const newStart = prompt('Edit start date (YYYY-MM-DD):', todos[idx].startDate || '');
+      const newEnd = prompt('Edit end date (YYYY-MM-DD):', todos[idx].endDate || '');
+      if (newText !== null) {
+        todos[idx].text = newText.trim() || todos[idx].text;
+        if (newStart !== null) {
+          todos[idx].startDate = newStart.trim();
+        }
+        if (newEnd !== null) {
+          todos[idx].endDate = newEnd.trim();
+        }
+        renderTodos();
+      }
+    }
+
+    document.getElementById('todo-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') addTodo();
+    });
+    document.getElementById('start-date').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') addTodo();
+    });
+    document.getElementById('end-date').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') addTodo();
+    });
+    // Countdown helper
+    function getCountdown(endDate) {
+      if (!endDate) return '';
+      const now = new Date();
+      const end = new Date(endDate);
+      if (isNaN(end.getTime())) return '';
+      const diff = end - now;
+      if (diff < 0) return 'Expired';
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / (1000 * 60)) % 60);
+      return `Countdown: ${days}d ${hours}h ${mins}m`;
+    }
+
+  loadTodos();
+  renderTodos();
+  // Live countdown update
+  setInterval(renderTodos, 60000);
+  </script>
+</body>
+</html>
