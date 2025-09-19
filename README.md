@@ -35,7 +35,7 @@ It helps users add, manage, and track tasks with deadlines while saving data in 
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/your-username/todo-list.git
+   git clone https://github.com/mithun-27/To-Do-List.git
    ```
 2. Open the `index.html` file in your browser
 3. Add tasks with optional start & end dates
